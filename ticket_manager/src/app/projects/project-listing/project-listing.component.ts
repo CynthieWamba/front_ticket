@@ -48,7 +48,6 @@ export class ProjectListingComponent {
       data.results.forEach((e, index) => {
         this.projects.push({"index": index + 1,"id": e.id, "name": e.name, "nombre_ticket": e.ticketsList.length})
       })
-      console.log(this.projects)
     });
   }
 
@@ -74,6 +73,9 @@ export class ProjectListingComponent {
     editProject(project: Project) {
         this.project = {...project};
         this.projectDialog = true;
+        this.projectService.getProjectInfo(""+project.id).subscribe((data) => {
+          console.log(data);
+      });
     }
 
     deleteProject(project: Project) {
@@ -82,9 +84,13 @@ export class ProjectListingComponent {
             header: 'Confirm',
             icon: 'pi pi-exclamation-triangle',
             accept: () => {
-                this.projects = this.projects.filter(val => val.id !== project.id);
-                this.project = {};
-                this.messageService.add({severity:'success', summary: 'Successful', detail: 'Project Deleted', life: 3000});
+              this.projectService.deleteProject(""+project.id).subscribe((data) => {
+                if (data.message){
+                  this.projects = this.projects.filter(val => val.id !== project.id);
+                  this.project = {};
+                  this.messageService.add({severity:'success', summary: 'Successful', detail: data.message, life: 3000});
+                }
+            });
             }
         });
     }

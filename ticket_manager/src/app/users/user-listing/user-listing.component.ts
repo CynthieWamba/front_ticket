@@ -2,7 +2,9 @@ import { Component } from '@angular/core';
 import { UserAPIServiceServiceService } from '../../service/user-apiservice-service.service';
 import { ConfirmationService } from 'primeng/api';
 import { MessageService } from 'primeng/api';
-import { Ticket, User } from '../../domain/user';
+import { User } from '../../domain/user';
+import { catchError } from 'rxjs';
+import { FOUND_ERROR } from '../../constants';
 
 @Component({
   selector: 'app-user-listing',
@@ -35,8 +37,9 @@ constructor(private userService: UserAPIServiceServiceService, private messageSe
 ngOnInit(): void {
 //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
 //Add 'implements OnInit' to the class.
-for (let i = 0; i < 5; i++) {
+for (let i = 100; i < 105; i++) {
   this.users.push({
+    "index":         i + 1,
     "id":         i + 1,
     "name":   "e.name",
     "comments":   10,
@@ -55,7 +58,6 @@ data.results.forEach((e, index) => {
     "name":   e.name,
     "comments":   e.comments?.length,
     "role":       e.role,
-
   })
 })
 });
@@ -90,9 +92,14 @@ this.confirmationService.confirm({
   header: 'Confirm',
   icon: 'pi pi-exclamation-triangle',
   accept: () => {
-      this.users = this.users.filter(val => val.id !== user.id);
-      this.user = {};
-      this.messageService.add({severity:'success', summary: 'Successful', detail: 'User Deleted', life: 3000});
+    this.userService.deleteUser(""+user.id)
+    .subscribe((data) => {
+      if (data.message){
+        this.users = this.users.filter(val => val.id !== user.id);
+        this.user = {};
+        this.messageService.add({severity:'success', summary: 'Successful', detail: data.message, life: 3000});
+      }
+  });
   }
 });
 }

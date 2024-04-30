@@ -17,11 +17,12 @@ export class UserAPIServiceServiceService {
   }
 
   getUserInfo(id: string): Observable<UserResult> {
+    console.log("++++++++++++++++++++++++++++++++  "+id)
     return this.http.get<UserResult>(BASE_API_URL+"/"+USER_API_URL+"/"+id);
   }
 
-  createUser(body: JSON): Observable<SuccessRes | ErrorRes> {
-    return this.http.post<SuccessRes | ErrorRes>(BASE_API_URL+"/"+USER_API_URL, body=body);
+  createUser(body: JSON): Observable<SuccessRes | any> {
+    return this.http.post<SuccessRes | any>(BASE_API_URL+"/"+USER_API_URL, body=body);
   }
 
   updateUser(id: string, body: JSON): Observable<UserResult> {
@@ -29,8 +30,6 @@ export class UserAPIServiceServiceService {
   }
 
   deleteUser(id: string): Observable<SuccessRes> {
-    return this.http.delete<SuccessRes>(BASE_API_URL+"/"+USER_API_URL+"/"+id+"/", {
-      headers: new HttpHeaders({ 'Content-Type': 'application/json' ,  'Access-Control-Allow-Origin':'*',})
-  });
+    return this.http.delete<SuccessRes>(BASE_API_URL+"/"+USER_API_URL+"/"+id+"/");
   }
 }

@@ -24,6 +24,7 @@ export class TagListingComponent {
 tags: Tags[] = [];
 selectedTags!: Tags[];
 tagDialog!: boolean;
+tagCreate!: boolean;
 submitted!: boolean;
 status: any[] = [];
 tag!: Tags;
@@ -38,8 +39,9 @@ ngOnInit(): void {
 
 for (let i = 0; i < 6; i++) {
   this.tags.push({
-    "id":         i + 1,          
-    "name":   "e.name",          
+    "id":         i + 1,
+    "index": i+1,
+    "name":   "e.name",
     "description":   "liliii",
     "tickets": 5,
     "created_at":       "OWNER",
@@ -47,10 +49,10 @@ for (let i = 0; i < 6; i++) {
 }
 
 this.tagService.getTags ().subscribe((data) => {
-console.log(data);
 data.results.forEach((e, index) => {
   this.tags.push({
-    "id":         index + 1,
+    "index":         index + 1,
+    "id": e.id,
     "name":       e.name,
     "description": e.description,
     "tickets":     e.tickets?.length,
@@ -62,7 +64,8 @@ data.results.forEach((e, index) => {
 
 openNew() {
 this.submitted = false;
-this.tagDialog = true;
+this.tag = {}
+this.tagCreate = true;
 }
 
 deleteSelectedTags() {
@@ -89,9 +92,13 @@ this.confirmationService.confirm({
   header: 'Confirm',
   icon: 'pi pi-exclamation-triangle',
   accept: () => {
-      this.tags = this.tags.filter(val => val.id !== tag.id);
-      this.tag = {};
-      this.messageService.add({severity:'success', summary: 'Successful', detail: 'Tag Deleted', life: 3000});
+    this.tagService.deleteTag(""+tag.id).subscribe((data) => {
+      if (data.message){
+        this.tags = this.tags.filter(val => val.id !== tag.id);
+        this.tag = {};
+        this.messageService.add({severity:'success', summary: 'Successful', detail: data.message, life: 3000});
+      }
+  });
   }
 });
 }
@@ -105,21 +112,41 @@ saveTag() {
 this.submitted = true;
 
 if (this.tag.name!.trim()) {
-  if (this.tag!.id) {
-      this.tags[this.findIndexById(""+this.tag.id)] = this.tag;
-      this.messageService.add({severity:'success', summary: 'Successful', detail: 'Tag Updated', life: 3000});
-  }
-  else {
-      this.tag.id = this.createId();
-      this.tags.push(this.tag);
-      this.messageService.add({severity:'success', summary: 'Successful', detail: 'Tag Created', life: 3000});
-  }
+  this.tagService.updateTag(""+this.tag.id,  {"name": this.tag.name,"description": this.tag.description, }).subscribe(
+    (data) => {
+      this.tag = {
+        "index":         this.tag.index,
+        "id": data.id,
+        "name":       data.name,
+        "description": data.description,
+        "tickets":     data.tickets?.length,
+        "created_at":  data.created_at
+      };
+      this.messageService.add({severity:'success', summary: 'Successful', detail: 'Tags mise à jour avec succès', life: 3000});
+    }
+  )
 
   this.tags = [...this.tags];
   this.tagDialog = false;
   this.tag = {};
+  this.ngOnInit();
 }
 }
+
+createTag() {
+  this.submitted = true;
+  if (this.tag.name!.trim()) {
+    this.tagService.createTag(this.tag).subscribe((data) => {
+      this.messageService.add({severity:'success', summary: 'Successful', detail: data.message, life: 3000});
+    });
+
+    this.tags = [...this.tags];
+    this.tagCreate = false;
+    this.tag = {};
+    this.ngOnInit();
+
+  }
+  }
 
 findIndexById(id: string): number {
 let index = -1;

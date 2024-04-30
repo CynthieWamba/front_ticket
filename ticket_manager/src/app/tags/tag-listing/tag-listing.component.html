@@ -11,7 +11,7 @@
     <p-table #dt [value]="tags" [rows]="10" [paginator]="true" [globalFilterFields]="['name']" responsiveLayout="scroll"
         [(selection)]="selectedTags" [rowHover]="true" dataKey="id"
         currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true">
-        
+
         <ng-template pTemplate="header">
             <tr>
                 <th style="width: 3rem">
@@ -30,7 +30,7 @@
                 <td>
                     <p-tableCheckbox [value]="tag"></p-tableCheckbox>
                 </td>
-                <td>{{tag.id}}</td>
+                <td>{{tag.index}}</td>
                 <td>{{tag.name}}</td>
                 <td>{{tag.description}}</td>
                 <td>{{tag.tickets}}</td>
@@ -61,7 +61,6 @@
         <label for="tag.description">Description</label>
         <textarea rows="5" cols="30" pInputTextarea [(ngModel)]="tag.description"></textarea>
         </div>
-        <p-button label="add"></p-button>
 
     </ng-template>
 
@@ -69,6 +68,27 @@
         <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
         <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="saveTag()"></button>
     </ng-template>
+</p-dialog>
+
+<p-dialog [(visible)]="tagCreate" [style]="{width: '450px'}" header="Création Tags" [modal]="true" styleClass="p-fluid">
+  <ng-template pTemplate="content">
+      <div class="field">
+          <label for="tag.name">Name</label>
+          <input type="text" pInputText id="name" [(ngModel)]="tag.name" required autofocus />
+          <small class="p-error" *ngIf="submitted && !tag.name">Name is required.</small>
+      </div>
+
+      <div>
+      <label for="tag.description">Description</label>
+      <textarea rows="5" cols="30" pInputTextarea [(ngModel)]="tag.description"></textarea>
+      </div>
+
+  </ng-template>
+
+  <ng-template pTemplate="footer">
+      <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+      <button pButton pRipple label="Add" icon="pi pi-check" class="p-button-text" (click)="createTag()"></button>
+  </ng-template>
 </p-dialog>
 
 <p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>

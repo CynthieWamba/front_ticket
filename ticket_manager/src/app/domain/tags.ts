@@ -21,3 +21,8 @@ export interface Tags {
   tickets?:     number;
   created_at?:  string;
 }
+
+export interface TagsUpdate {
+  name?:        string;
+  description?: string;
+}

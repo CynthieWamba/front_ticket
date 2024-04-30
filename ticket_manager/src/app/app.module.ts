@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import { BrowserModule, provideClientHydration } from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, provideHttpClient, withFetch } from '@angular/common/http';
 
 import {TableModule} from 'primeng/table';
 import {ToastModule} from 'primeng/toast';
@@ -56,7 +56,6 @@ import { TagListingComponent } from './tags/tag-listing/tag-listing.component';
   ],
   imports: [
     ButtonModule,
-    TableModule,
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
@@ -83,7 +82,8 @@ import { TagListingComponent } from './tags/tag-listing/tag-listing.component';
     AppRoutingModule
   ],
   providers: [
-    provideClientHydration()
+    provideClientHydration(),
+    provideHttpClient(withFetch())
   ],
   bootstrap: [AppComponent]
 })
