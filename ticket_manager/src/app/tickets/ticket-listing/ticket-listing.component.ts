@@ -9,7 +9,7 @@ import { Ticket } from '../../domain/tickets';
   templateUrl: './ticket-listing.component.html',
   styleUrl: './ticket-listing.component.css',
   styles: [`
-        :host ::ng-deep .p-dialog .product-image {
+        :host ::ng-deep .p-dialog .ticket-image {
             width: 150px;
             margin: 0 auto 2rem auto;
             display: block;
@@ -56,25 +56,25 @@ export class TicketListingComponent {
     this.ticketDialog = true;
 }
 
-deleteSelectedProducts() {
+deleteSelectedTickets() {
     this.confirmationService.confirm({
-        message: 'Are you sure you want to delete the selected products?',
+        message: 'Are you sure you want to delete the selected tickets?',
         header: 'Confirm',
         icon: 'pi pi-exclamation-triangle',
         accept: () => {
             this.tickets = this.tickets.filter(val => !this.selectedTickets.includes(val));
             this.selectedTickets = [];
-            this.messageService.add({severity:'success', summary: 'Successful', detail: 'Products Deleted', life: 3000});
+            this.messageService.add({severity:'success', summary: 'Successful', detail: 'Tickets Deleted', life: 3000});
         }
     });
 }
 
-editProduct(product: Ticket) {
-    this.ticket = {...product};
+editTicket(ticket: Ticket) {
+    this.ticket = {...ticket};
     this.ticketDialog = true;
 }
 
-deleteProduct(ticket: Ticket) {
+deleteTicket(ticket: Ticket) {
     this.confirmationService.confirm({
         message: 'Are you sure you want to delete ' + ticket.title + '?',
         header: 'Confirm',
@@ -82,7 +82,7 @@ deleteProduct(ticket: Ticket) {
         accept: () => {
             this.tickets = this.tickets.filter(val => val.id !== ticket.id);
             this.ticket = {};
-            this.messageService.add({severity:'success', summary: 'Successful', detail: 'Product Deleted', life: 3000});
+            this.messageService.add({severity:'success', summary: 'Successful', detail: 'Ticket Deleted', life: 3000});
         }
     });
 }
@@ -92,18 +92,18 @@ hideDialog() {
     this.submitted = false;
 }
 
-saveProduct() {
+saveTicket() {
     this.submitted = true;
 
     if (this.ticket.title!.trim()) {
         if (this.ticket!.id) {
             this.tickets[this.findIndexById(""+this.ticket.id)] = this.ticket;
-            this.messageService.add({severity:'success', summary: 'Successful', detail: 'Product Updated', life: 3000});
+            this.messageService.add({severity:'success', summary: 'Successful', detail: 'Ticket Updated', life: 3000});
         }
         else {
             this.ticket.id = this.createId();
             this.tickets.push(this.ticket);
-            this.messageService.add({severity:'success', summary: 'Successful', detail: 'Product Created', life: 3000});
+            this.messageService.add({severity:'success', summary: 'Successful', detail: 'Ticket Created', life: 3000});
         }
 
         this.tickets = [...this.tickets];

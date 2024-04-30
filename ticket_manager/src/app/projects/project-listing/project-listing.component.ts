@@ -9,7 +9,7 @@ import { MessageService } from 'primeng/api';
   templateUrl: './project-listing.component.html',
   styleUrl: './project-listing.component.css',
   styles: [`
-        :host ::ng-deep .p-dialog .product-image {
+        :host ::ng-deep .p-dialog .project-image {
             width: 150px;
             margin: 0 auto 2rem auto;
             display: block;
@@ -34,6 +34,15 @@ export class ProjectListingComponent {
   ngOnInit(): void {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     //Add 'implements OnInit' to the class.
+
+    for (let i = 0; i < 5; i++) {
+        this.projects.push({
+          "id":         i + 1,          
+          "name":   "e.Loica",          
+          "nombre_ticket":   10,
+        });
+      }
+
     this.projectService.getProjects().subscribe((data) => {
       console.log(data)
       data.results.forEach((e, index) => {
@@ -48,25 +57,25 @@ export class ProjectListingComponent {
         this.projectDialog = true;
     }
 
-    deleteSelectedProducts() {
+    deleteSelectedProjects() {
         this.confirmationService.confirm({
-            message: 'Are you sure you want to delete the selected products?',
+            message: 'Are you sure you want to delete the selected projects?',
             header: 'Confirm',
             icon: 'pi pi-exclamation-triangle',
             accept: () => {
                 this.projects = this.projects.filter(val => !this.selectedProjects.includes(val));
                 this.selectedProjects = [];
-                this.messageService.add({severity:'success', summary: 'Successful', detail: 'Products Deleted', life: 3000});
+                this.messageService.add({severity:'success', summary: 'Successful', detail: 'Projects Deleted', life: 3000});
             }
         });
     }
 
-    editProduct(product: Project) {
-        this.project = {...product};
+    editProject(project: Project) {
+        this.project = {...project};
         this.projectDialog = true;
     }
 
-    deleteProduct(project: Project) {
+    deleteProject(project: Project) {
         this.confirmationService.confirm({
             message: 'Are you sure you want to delete ' + project.name + '?',
             header: 'Confirm',
@@ -74,7 +83,7 @@ export class ProjectListingComponent {
             accept: () => {
                 this.projects = this.projects.filter(val => val.id !== project.id);
                 this.project = {};
-                this.messageService.add({severity:'success', summary: 'Successful', detail: 'Product Deleted', life: 3000});
+                this.messageService.add({severity:'success', summary: 'Successful', detail: 'Project Deleted', life: 3000});
             }
         });
     }
@@ -84,18 +93,18 @@ export class ProjectListingComponent {
         this.submitted = false;
     }
 
-    saveProduct() {
+    saveProject() {
         this.submitted = true;
 
         if (this.project.name!.trim()) {
             if (this.project!.id) {
                 this.projects[this.findIndexById(""+this.project.id)] = this.project;
-                this.messageService.add({severity:'success', summary: 'Successful', detail: 'Product Updated', life: 3000});
+                this.messageService.add({severity:'success', summary: 'Successful', detail: 'Project Updated', life: 3000});
             }
             else {
                 this.project.id = this.createId();
                 this.projects.push(this.project);
-                this.messageService.add({severity:'success', summary: 'Successful', detail: 'Product Created', life: 3000});
+                this.messageService.add({severity:'success', summary: 'Successful', detail: 'Project Created', life: 3000});
             }
 
             this.projects = [...this.projects];

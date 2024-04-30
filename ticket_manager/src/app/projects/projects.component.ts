@@ -36,25 +36,25 @@ export class ProjectsComponent {
         this.projectDialog = true;
     }
 
-    deleteSelectedProducts() {
+    deleteSelectedProjects() {
         this.confirmationService.confirm({
-            message: 'Are you sure you want to delete the selected products?',
+            message: 'Are you sure you want to delete the selected projects?',
             header: 'Confirm',
             icon: 'pi pi-exclamation-triangle',
             accept: () => {
                 this.projects = this.projects.filter(val => !this.selectedProjects.includes(val));
                 this.selectedProjects = [];
-                this.messageService.add({severity:'success', summary: 'Successful', detail: 'Products Deleted', life: 3000});
+                this.messageService.add({severity:'success', summary: 'Successful', detail: 'Projects Deleted', life: 3000});
             }
         });
     }
 
-    editProduct(product: Project) {
-        this.project = {...product};
+    editProject(project: Project) {
+        this.project = {...project};
         this.projectDialog = true;
     }
 
-    deleteProduct(project: Project) {
+    deleteProject(project: Project) {
         this.confirmationService.confirm({
             message: 'Are you sure you want to delete ' + project.name + '?',
             header: 'Confirm',
@@ -62,7 +62,7 @@ export class ProjectsComponent {
             accept: () => {
                 this.projects = this.projects.filter(val => val.id !== project.id);
                 this.project = {};
-                this.messageService.add({severity:'success', summary: 'Successful', detail: 'Product Deleted', life: 3000});
+                this.messageService.add({severity:'success', summary: 'Successful', detail: 'Project Deleted', life: 3000});
             }
         });
     }
@@ -72,18 +72,18 @@ export class ProjectsComponent {
         this.submitted = false;
     }
 
-    saveProduct() {
+    saveProject() {
         this.submitted = true;
 
         if (this.project.name!.trim()) {
             if (this.project!.id) {
                 this.projects[this.findIndexById(""+this.project.id)] = this.project;
-                this.messageService.add({severity:'success', summary: 'Successful', detail: 'Product Updated', life: 3000});
+                this.messageService.add({severity:'success', summary: 'Successful', detail: 'Project Updated', life: 3000});
             }
             else {
                 this.project.id = this.createId();
                 this.projects.push(this.project);
-                this.messageService.add({severity:'success', summary: 'Successful', detail: 'Product Created', life: 3000});
+                this.messageService.add({severity:'success', summary: 'Successful', detail: 'Project Created', life: 3000});
             }
 
             this.projects = [...this.projects];

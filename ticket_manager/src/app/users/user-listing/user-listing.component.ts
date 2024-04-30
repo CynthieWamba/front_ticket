@@ -9,7 +9,7 @@ import { Ticket, User } from '../../domain/user';
   templateUrl: './user-listing.component.html',
   styleUrl: './user-listing.component.css',
   styles: [`
-  :host ::ng-deep .p-dialog .product-image {
+  :host ::ng-deep .p-dialog .user-image {
       width: 150px;
       margin: 0 auto 2rem auto;
       display: block;
@@ -35,12 +35,16 @@ constructor(private userService: UserAPIServiceServiceService, private messageSe
 ngOnInit(): void {
 //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
 //Add 'implements OnInit' to the class.
-this.users.push({
-  "id":         0,
-  "name":   "e.name",
-  "comments":   10,
-  "role":       "OWNER",
-});
+for (let i = 0; i < 5; i++) {
+  this.users.push({
+    "id":         i + 1,          
+    "name":   "e.name",          
+    "comments":   10,
+    "role":       "OWNER",
+  });
+}
+
+
 
 this.userService.getUsers().subscribe((data) => {
 console.log(data);
@@ -61,25 +65,25 @@ this.submitted = false;
 this.userDialog = true;
 }
 
-deleteSelectedProducts() {
+deleteSelectedUsers() {
 this.confirmationService.confirm({
-  message: 'Are you sure you want to delete the selected products?',
+  message: 'Are you sure you want to delete the selected users?',
   header: 'Confirm',
   icon: 'pi pi-exclamation-triangle',
   accept: () => {
       this.users = this.users.filter(val => !this.selectedUsers.includes(val));
       this.selectedUsers = [];
-      this.messageService.add({severity:'success', summary: 'Successful', detail: 'Products Deleted', life: 3000});
+      this.messageService.add({severity:'success', summary: 'Successful', detail: 'Users Deleted', life: 3000});
   }
 });
 }
 
-editProduct(product: User) {
-this.user = {...product};
+editUser(user: User) {
+this.user = {...user};
 this.userDialog = true;
 }
 
-deleteProduct(user: User) {
+deleteUser(user: User) {
 this.confirmationService.confirm({
   message: 'Are you sure you want to delete ' + user.name + '?',
   header: 'Confirm',
@@ -87,7 +91,7 @@ this.confirmationService.confirm({
   accept: () => {
       this.users = this.users.filter(val => val.id !== user.id);
       this.user = {};
-      this.messageService.add({severity:'success', summary: 'Successful', detail: 'Product Deleted', life: 3000});
+      this.messageService.add({severity:'success', summary: 'Successful', detail: 'User Deleted', life: 3000});
   }
 });
 }
@@ -97,18 +101,18 @@ this.userDialog = false;
 this.submitted = false;
 }
 
-saveProduct() {
+saveUser() {
 this.submitted = true;
 
 if (this.user.name!.trim()) {
   if (this.user!.id) {
       this.users[this.findIndexById(""+this.user.id)] = this.user;
-      this.messageService.add({severity:'success', summary: 'Successful', detail: 'Product Updated', life: 3000});
+      this.messageService.add({severity:'success', summary: 'Successful', detail: 'User Updated', life: 3000});
   }
   else {
       this.user.id = this.createId();
       this.users.push(this.user);
-      this.messageService.add({severity:'success', summary: 'Successful', detail: 'Product Created', life: 3000});
+      this.messageService.add({severity:'success', summary: 'Successful', detail: 'User Created', life: 3000});
   }
 
   this.users = [...this.users];
