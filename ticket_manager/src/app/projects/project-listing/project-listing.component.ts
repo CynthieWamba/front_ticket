@@ -37,16 +37,16 @@ export class ProjectListingComponent {
 
     for (let i = 0; i < 5; i++) {
         this.projects.push({
-          "id":         i + 1,          
-          "name":   "e.Loica",          
+          "id":         i + 1,
+          "name":   "e.Loica",
           "nombre_ticket":   10,
         });
       }
 
     this.projectService.getProjects().subscribe((data) => {
-      console.log(data)
+
       data.results.forEach((e, index) => {
-        this.projects.push({"id":e.id, "name": e.name, "nombre_ticket": e.ticketsList.length})
+        this.projects.push({"index": index + 1,"id": e.id, "name": e.name, "nombre_ticket": e.ticketsList.length})
       })
     });
   }
@@ -73,6 +73,9 @@ export class ProjectListingComponent {
     editProject(project: Project) {
         this.project = {...project};
         this.projectDialog = true;
+        this.projectService.getProjectInfo(""+project.id).subscribe((data) => {
+          console.log(data);
+      });
     }
 
     deleteProject(project: Project) {
@@ -81,9 +84,13 @@ export class ProjectListingComponent {
             header: 'Confirm',
             icon: 'pi pi-exclamation-triangle',
             accept: () => {
-                this.projects = this.projects.filter(val => val.id !== project.id);
-                this.project = {};
-                this.messageService.add({severity:'success', summary: 'Successful', detail: 'Project Deleted', life: 3000});
+              this.projectService.deleteProject(""+project.id).subscribe((data) => {
+                if (data.message){
+                  this.projects = this.projects.filter(val => val.id !== project.id);
+                  this.project = {};
+                  this.messageService.add({severity:'success', summary: 'Successful', detail: data.message, life: 3000});
+                }
+            });
             }
         });
     }

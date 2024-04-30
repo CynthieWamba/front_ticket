@@ -17,7 +17,7 @@
                 <th style="width: 3rem">
                     <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
                 </th>
-                <th pSortableColumn="id">ID <p-sortIcon field="id"></p-sortIcon></th>
+                <th pSortableColumn="index">ID <p-sortIcon field="index"></p-sortIcon></th>
                 <th pSortableColumn="name">Name <p-sortIcon field="name"></p-sortIcon></th>
                 <th pSortableColumn="role">Role <p-sortIcon field="role"></p-sortIcon></th>
                <!-- <th pSortableColumn="assign_to">Utilisateur assignés <p-sortIcon field="assign_to"></p-sortIcon></th> -->
@@ -30,7 +30,7 @@
                 <td>
                     <p-tableCheckbox [value]="user"></p-tableCheckbox>
                 </td>
-                <td>{{user.id}}</td>
+                <td>{{user.index}}</td>
                 <td>{{user.name}}</td>
                 <td>{{user.role}}</td>
                 <td>{{user.comments}}</td>

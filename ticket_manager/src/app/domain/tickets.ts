@@ -35,6 +35,7 @@ export interface Tag {
 
 export interface Ticket {
   id?:         number;
+  index?:       number;
   content?:    string;
   title?:      string;
   tags?:       string;

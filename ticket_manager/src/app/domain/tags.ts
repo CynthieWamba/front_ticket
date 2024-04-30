@@ -15,8 +15,14 @@ export interface TagsResult {
 
 export interface Tags {
   id?:          number;
+  index?:       number;
   name?:        string;
   description?: string;
   tickets?:     number;
   created_at?:  string;
+}
+
+export interface TagsUpdate {
+  name?:        string;
+  description?: string;
 }

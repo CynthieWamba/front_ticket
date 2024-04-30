@@ -82,8 +82,7 @@
             }
           },
           "options": {
-            "buildTarget": "ticket_manager:build",
-            "proxyConfig": "src/proxy.conf.json"
+            "proxyConfig": "src/proxy.config.json"
             },
           "defaultConfiguration": "development"
         },

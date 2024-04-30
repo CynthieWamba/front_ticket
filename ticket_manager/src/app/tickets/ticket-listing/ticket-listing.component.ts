@@ -36,10 +36,10 @@ export class TicketListingComponent {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     //Add 'implements OnInit' to the class.
     this.ticketService.getTickets ().subscribe((data) => {
-      console.log(data);
       data.results.forEach((e, index) => {
         this.tickets.push({
-          "id":         index + 1,
+          "index":         index + 1,
+          "id": e.id,
           "content":    e.content,
           "title":      e.title,
           "tags":       e.tags?.map(item => item.name).join(", "),
@@ -80,9 +80,13 @@ deleteTicket(ticket: Ticket) {
         header: 'Confirm',
         icon: 'pi pi-exclamation-triangle',
         accept: () => {
-            this.tickets = this.tickets.filter(val => val.id !== ticket.id);
-            this.ticket = {};
-            this.messageService.add({severity:'success', summary: 'Successful', detail: 'Ticket Deleted', life: 3000});
+          this.ticketService.deleteTicket(""+ticket.id).subscribe((data) => {
+            if (data.message){
+              this.tickets = this.tickets.filter(val => val.id !== ticket.id);
+              this.ticket = {};
+              this.messageService.add({severity:'success', summary: 'Successful', detail: data.message, life: 3000});
+            }
+        });
         }
     });
 }
