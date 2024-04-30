@@ -17,7 +17,7 @@
                 <th style="width: 3rem">
                     <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
                 </th>
-                <th pSortableColumn="id">ID <p-sortIcon field="id"></p-sortIcon></th>
+                <th pSortableColumn="index">ID <p-sortIcon field="index"></p-sortIcon></th>
                 <th pSortableColumn="title">Titre <p-sortIcon field="title"></p-sortIcon></th>
                 <th pSortableColumn="state">Status <p-sortIcon field="state"></p-sortIcon></th>
                 <th pSortableColumn="tags">Tags <p-sortIcon field="tags"></p-sortIcon></th>
@@ -31,7 +31,7 @@
                 <td>
                     <p-tableCheckbox [value]="ticket"></p-tableCheckbox>
                 </td>
-                <td>{{ticket.id}}</td>
+                <td>{{ticket.index}}</td>
                 <td>{{ticket.title}}</td>
                 <td>{{ticket.state}}</td>
                 <td>{{ticket.tags}}</td>

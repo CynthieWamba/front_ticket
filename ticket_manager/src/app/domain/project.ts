@@ -6,10 +6,10 @@ export interface ProjectServiceRes {
 export interface ProjectResult {
   id:          number;
   name:        string;
-  ticketsList: Tickets[] | [];
+  ticketsList: ProjectTickets[] | [];
 }
 
-export interface Tickets {
+export interface ProjectTickets {
   id:         number;
   content:    string;
   title:      string;
@@ -20,7 +20,8 @@ export interface Tickets {
 }
 
 export interface Project {
-  id?: number,
-  name?: string,
-  nombre_ticket?: number
+  id?: number;
+  index?: number;
+  name?: string;
+  nombre_ticket?: number;
 }

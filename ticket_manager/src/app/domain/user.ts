@@ -23,6 +23,7 @@ export interface Ticket {
 
 export interface User {
   id?:       number;
+  index?:    number;
   username?: string;
   name?:     string;
   role?:     string;

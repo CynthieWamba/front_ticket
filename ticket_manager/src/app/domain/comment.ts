@@ -12,6 +12,7 @@ export interface CommentResult {
 
 export interface Comment {
   id?:         number;
+  index?:       number;
   content?:    string;
   created_at?: string;
 }

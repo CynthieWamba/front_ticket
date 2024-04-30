@@ -37,17 +37,18 @@ export class ProjectListingComponent {
 
     for (let i = 0; i < 5; i++) {
         this.projects.push({
-          "id":         i + 1,          
-          "name":   "e.Loica",          
+          "id":         i + 1,
+          "name":   "e.Loica",
           "nombre_ticket":   10,
         });
       }
 
     this.projectService.getProjects().subscribe((data) => {
-      console.log(data)
+
       data.results.forEach((e, index) => {
-        this.projects.push({"id":e.id, "name": e.name, "nombre_ticket": e.ticketsList.length})
+        this.projects.push({"index": index + 1,"id": e.id, "name": e.name, "nombre_ticket": e.ticketsList.length})
       })
+      console.log(this.projects)
     });
   }
 

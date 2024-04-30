@@ -39,7 +39,8 @@ export class TicketListingComponent {
       console.log(data);
       data.results.forEach((e, index) => {
         this.tickets.push({
-          "id":         index + 1,
+          "index":         index + 1,
+          "id": e.id,
           "content":    e.content,
           "title":      e.title,
           "tags":       e.tags?.map(item => item.name).join(", "),

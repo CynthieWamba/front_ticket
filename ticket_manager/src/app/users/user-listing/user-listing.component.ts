@@ -37,8 +37,8 @@ ngOnInit(): void {
 //Add 'implements OnInit' to the class.
 for (let i = 0; i < 5; i++) {
   this.users.push({
-    "id":         i + 1,          
-    "name":   "e.name",          
+    "id":         i + 1,
+    "name":   "e.name",
     "comments":   10,
     "role":       "OWNER",
   });
@@ -50,7 +50,8 @@ this.userService.getUsers().subscribe((data) => {
 console.log(data);
 data.results.forEach((e, index) => {
   this.users.push({
-    "id":         index + 1,
+    "index": index + 1,
+    "id": e.id,
     "name":   e.name,
     "comments":   e.comments?.length,
     "role":       e.role,

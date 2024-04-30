@@ -15,6 +15,7 @@ export interface TagsResult {
 
 export interface Tags {
   id?:          number;
+  index?:       number;
   name?:        string;
   description?: string;
   tickets?:     number;
