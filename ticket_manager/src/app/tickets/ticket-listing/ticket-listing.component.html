@@ -1,1 +1,77 @@
-<p>ticket-listing works!</p>
+<p-toast></p-toast>
+
+<div class="card">
+    <p-toolbar styleClass="mb-4">
+        <ng-template pTemplate="left">
+            <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success mr-2" (click)="openNew()"></button>
+            <button pButton pRipple label="Delete" icon="pi pi-trash" class="p-button-danger" (click)="deleteSelectedProducts()" [disabled]="!selectedTickets || !selectedTickets.length"></button>
+        </ng-template>
+
+    </p-toolbar>
+
+    <p-table #dt [value]="tickets" [rows]="10" [paginator]="true" [globalFilterFields]="['title']" responsiveLayout="scroll"
+        [(selection)]="selectedTickets" [rowHover]="true" dataKey="id"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true">
+        <ng-template pTemplate="caption">
+            <div class="flex align-items-center justify-content-between">
+                <h5 class="m-0">Manage Tickets</h5>
+                <span class="p-input-icon-left">
+                </span>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <th style="width: 3rem">
+                    <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                </th>
+                <th pSortableColumn="id">ID <p-sortIcon field="id"></p-sortIcon></th>
+                <th pSortableColumn="title">Titre <p-sortIcon field="title"></p-sortIcon></th>
+                <th pSortableColumn="state">Status <p-sortIcon field="state"></p-sortIcon></th>
+                <th pSortableColumn="tags">Tags <p-sortIcon field="tags"></p-sortIcon></th>
+                <th pSortableColumn="assign_to">Utilisateur assignés <p-sortIcon field="assign_to"></p-sortIcon></th>
+                <th pSortableColumn="comments">Nombres de commentaires <p-sortIcon field="comments"></p-sortIcon></th>
+                <th></th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-ticket>
+            <tr>
+                <td>
+                    <p-tableCheckbox [value]="ticket"></p-tableCheckbox>
+                </td>
+                <td>{{ticket.id}}</td>
+                <td>{{ticket.title}}</td>
+                <td>{{ticket.state}}</td>
+                <td>{{ticket.tags}}</td>
+                <td>{{ticket.assign_to}}</td>
+                <td>{{ticket.comments}}</td>
+                <td>
+                    <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="editProduct(ticket)"></button>
+                    <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteProduct(ticket)"></button>
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="summary">
+            <div class="flex align-items-center justify-content-between">
+                In total there are {{tickets ? tickets.length : 0 }} Tickets.
+            </div>
+        </ng-template>
+    </p-table>
+</div>
+
+<p-dialog [(visible)]="ticketDialog" [style]="{width: '450px'}" header="Project Details" [modal]="true" styleClass="p-fluid">
+    <ng-template pTemplate="content">
+        <div class="field">
+            <label for="name">Name</label>
+            <input type="text" pInputText id="name" [(ngModel)]="ticket.title" required autofocus />
+            <small class="p-error" *ngIf="submitted && !ticket.title">Name is required.</small>
+        </div>
+
+    </ng-template>
+
+    <ng-template pTemplate="footer">
+        <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+        <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="saveProduct()"></button>
+    </ng-template>
+</p-dialog>
+
+<p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>
