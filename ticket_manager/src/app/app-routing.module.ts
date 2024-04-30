@@ -4,15 +4,12 @@ import { ProjectListingComponent } from './projects/project-listing/project-list
 import { UsersComponent } from './users/users.component';
 import { TicketListingComponent } from './tickets/ticket-listing/ticket-listing.component';
 import { ProjectsComponent } from './projects/projects.component';
-import { TagsComponent } from './tags/tags.component';
-import { TicketsComponent } from './tickets/tickets.component';
-import { TagsListingComponent } from './tags/tags-listing/tags-listing.component';
 import { UserListingComponent } from './users/user-listing/user-listing.component';
 
 const routes: Routes = [
   {
-    path: "project",
-    component: ProjectsComponent
+    path: "projects",
+    component: ProjectListingComponent
   },
   {
     path: "tickets",
@@ -20,7 +17,7 @@ const routes: Routes = [
   },
   {
     path: "tags",
-    component: TagsListingComponent
+    component: ProjectsComponent
   },
   {
     path: "users",
