@@ -36,6 +36,7 @@ import { UserDetailComponent } from './users/user-detail/user-detail.component';
 import { UserListingComponent } from './users/user-listing/user-listing.component';
 import { TagsComponent } from './tags/tags.component';
 import { TagDetailComponent } from './tags/tag-detail/tag-detail.component';
+import { TagListingComponent } from './tags/tag-listing/tag-listing.component';
 
 @NgModule({
   declarations: [
@@ -50,7 +51,8 @@ import { TagDetailComponent } from './tags/tag-detail/tag-detail.component';
     UserDetailComponent,
     UserListingComponent,
     TagsComponent,
-    TagDetailComponent
+    TagDetailComponent,
+    TagListingComponent
   ],
   imports: [
     ButtonModule,

@@ -5,6 +5,7 @@ import { UsersComponent } from './users/users.component';
 import { TicketListingComponent } from './tickets/ticket-listing/ticket-listing.component';
 import { ProjectsComponent } from './projects/projects.component';
 import { UserListingComponent } from './users/user-listing/user-listing.component';
+import { TagListingComponent } from './tags/tag-listing/tag-listing.component';
 
 const routes: Routes = [
   {
@@ -17,7 +18,7 @@ const routes: Routes = [
   },
   {
     path: "tags",
-    component: ProjectsComponent
+    component: TagListingComponent
   },
   {
     path: "users",
