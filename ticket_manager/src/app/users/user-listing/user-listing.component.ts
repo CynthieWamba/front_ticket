@@ -35,6 +35,13 @@ constructor(private userService: UserAPIServiceServiceService, private messageSe
 ngOnInit(): void {
 //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
 //Add 'implements OnInit' to the class.
+this.users.push({
+  "id":         0,
+  "name":   "e.name",
+  "comments":   10,
+  "role":       "OWNER",
+});
+
 this.userService.getUsers().subscribe((data) => {
 console.log(data);
 data.results.forEach((e, index) => {
@@ -43,7 +50,7 @@ data.results.forEach((e, index) => {
     "name":   e.name,
     "comments":   e.comments?.length,
     "role":       e.role,
-    
+
   })
 })
 });
