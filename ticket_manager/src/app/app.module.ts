@@ -34,6 +34,9 @@ import { TicketDetailComponent } from './tickets/ticket-detail/ticket-detail.com
 import { TicketListingComponent } from './tickets/ticket-listing/ticket-listing.component';
 import { UserDetailComponent } from './users/user-detail/user-detail.component';
 import { UserListingComponent } from './users/user-listing/user-listing.component';
+import { TagsComponent } from './tags/tags.component';
+import { TagDetailComponent } from './tags/tag-detail/tag-detail.component';
+import { TagListingComponent } from './tags/tag-listing/tag-listing.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +49,10 @@ import { UserListingComponent } from './users/user-listing/user-listing.componen
     TicketDetailComponent,
     TicketListingComponent,
     UserDetailComponent,
-    UserListingComponent
+    UserListingComponent,
+    TagsComponent,
+    TagDetailComponent,
+    TagListingComponent
   ],
   imports: [
     BrowserModule,
